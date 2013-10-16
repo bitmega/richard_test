@@ -1,4 +1,5 @@
 class RegistrationsController < Devise::RegistrationsController
+  #POST /auth
   def create
     @company = Company.new(company_params)
     params[:user].delete :company
@@ -15,10 +16,11 @@ class RegistrationsController < Devise::RegistrationsController
     end
   end
 
+  #GET /company_info
   def company_info
   end
 
-private
+  private
   def company_params
     params[:user].require(:company).permit(:name, :subdomain)
   end

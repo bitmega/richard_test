@@ -56,7 +56,8 @@ class UsersController < ApplicationController
     end
     redirect_to users_path
   end
-private
+
+  private
   def load_account
     #make sure that only admin can manage users
     authorize! :manage, User
