@@ -1,0 +1,30 @@
+<%= link_to t('.new'), new_user_path, class: "btn btn-primary" %>
+<hr />
+<table class="table table-hover">
+  <thead>
+    <th><%= t(".username") %></th>
+    <th><%= t(".email") %></th>
+    <th><%= t(".created_at") %></th>
+    <th><%= t(".action") %></th>
+  </thead>
+  <tbody>
+    <% @users.each do |user| %>
+      <tr>
+        <td><%= link_to user.username, edit_user_path(user) %></td>
+        <td><%= user.email %></td>
+        <td><%= user.created_at %></td>
+        <td>
+          <%= link_to t(".edit"), edit_user_path(user), class: "btn btn-mini" %>
+          <%= link_to t(".delete"), user_path(user), confirm: t(".delete_confirm"), method: :delete, class: "btn btn-danger btn-mini" %>
+        </td>
+      </tr>
+    <% end %>
+
+    <% if @users.empty? %>
+      <tr>
+        <td colspan='4'><%= t('.no_user') %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<%= will_paginate(@users) %>
