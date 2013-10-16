@@ -16,14 +16,12 @@ class ApplicationController < ActionController::Base
   protected
   def check_subdomain
     return if Rails.env.test?
-    if current_user
-      if request.subdomain.blank? || request.subdomain != current_user.company.subdomain
-        redirect_to root_url(:subdomain => current_user.company.subdomain)
-      end
-    else
-      if !request.subdomain.blank?
-        redirect_to root_url(:subdomain => '')
-      end
+
+    #Redirect to subdomain only if user signed in and is on different subdomain
+    if user_signed_in? && current_user.company.subdomain != request.subdomain
+      redirect_to root_url(:subdomain => current_user.company.subdomain)
+    elsif !user_signed_in? && !request.subdomain.blank?
+      redirect_to root_url(:subdomain => '')
     end
   end
 end
