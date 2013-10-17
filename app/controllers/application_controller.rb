@@ -18,7 +18,7 @@ class ApplicationController < ActionController::Base
     return if Rails.env.test?
 
     #Redirect to subdomain only if user signed in and is on different subdomain
-    if user_signed_in? && current_user.company.subdomain != request.subdomain &&
+    if user_signed_in? && current_user.company.try(:subdomain) != request.subdomain &&
       request.subdomain != 'www'
       redirect_to users_url(:subdomain => current_user.company.subdomain)
     elsif !user_signed_in? && !request.subdomain.blank?

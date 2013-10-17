@@ -17,7 +17,7 @@
   <div><%= f.label :password_confirmation %>
   <%= f.password_field :password_confirmation %></div>
 
-  <%= f.fields_for :company do |cf| %>
+  <%= f.fields_for :company, resource.company do |cf| %>
     <div>
       <%= cf.label :name, Company.human_attribute_name("name") %>
       <%= cf.text_field :name %>
