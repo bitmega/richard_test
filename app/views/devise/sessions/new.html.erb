@@ -3,10 +3,14 @@
 <%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
   <div><%= f.label :username %>
   <%= f.text_field :username, :autofocus => true %></div>
-  <div>
-    <%= f.label :subdomain %>
-    <%= f.text_field :subdomain %>
-  </div>
+  <% if request.subdomain.blank? || request.subdomain == 'www' %>
+    <div>
+      <%= f.label :subdomain %>
+      <%= f.text_field :subdomain %>
+    </div>
+  <% else %>
+    <%= f.hidden_field :subdomain, value: request.subdomain %>
+  <% end %>
   <div><%= f.label :password %>
   <%= f.password_field :password %></div>
 

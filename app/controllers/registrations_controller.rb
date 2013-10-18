@@ -6,20 +6,22 @@ class RegistrationsController < Devise::RegistrationsController
 
     resource = build_resource(user_params)
     resource.company = @company
+    resource.admin = true
+    begin
+      ActiveRecord::Base.transaction do
+        @company.save!
+        resource.save!
+      end
 
-    unless @company.save
-      @company.errors.each do |attr, error|
-        resource.errors.add(attr, error)
+      sign_in resource, by_pass: true
+      redirect_to root_path
+    rescue
+      unless @company.errors.empty?
+        @company.errors.each do |attr, error|
+          resource.errors.add(attr, error)
+        end
       end
       respond_with(resource)
-    else
-      resource.admin = true
-      if resource.save
-        sign_in resource, by_pass: true
-        redirect_to root_path
-      else
-        respond_with(resource)
-      end
     end
   end
 

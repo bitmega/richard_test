@@ -44,12 +44,12 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <a class="brand" href="<%= root_path %>">RichardProject</a>
+          <a class="brand" href="<%= root_url(:subdomain => '') %>">RichardProject</a>
           <div class="container-fluid nav-collapse">
             <ul class="nav">
               <% unless user_signed_in? %>
                 <li><%= link_to "Sign In", new_user_session_path %></li>
-                <li><%= link_to "Sign Up", new_user_registration_path %></li>
+                <li><%= link_to "Sign Up", new_user_registration_url(:subdomain => '') %></li>
               <% else %>
                 <% if can? :manage, User %>
                   <li><%= link_to "User Management", users_path %>
